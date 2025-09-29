@@ -1,5 +1,82 @@
 {
   "welcome": "Welcome"
+  ,
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "submit": "Submit",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret"
+    ,
+    "showPassword": "Show password",
+    "errors": {
+      "badCredentials": "Incorrect email or password",
+      "generic": "Error. Please try again later"
+    }
+  }
+  ,
+  "ui": {
+    "language": "Language"
+    ,
+    "menu": "Menu"
+  }
+  ,
+  "home": {
+    "stage": "Stage",
+    "cycle": "Cycle",
+    "left": "Left",
+    "right": "Right",
+    "multibonus": "Multibonus",
+    "structure_bonus": "Structure",
+    "sponsor_bonus": "Sponsor"
+    ,
+    "registration_link": "Registration link",
+    "copied": "Copied",
+    "all_time": "All time bonus"
+  }
+  ,
+  "menu": {
+    "home": "Home",
+    "structure": "Structure",
+    "bonuses": "Bonuses",
+    "personals": "Personals"
+  }
+  ,
+  "register": {
+    "form": "Registration form",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "lastname": "Last name",
+    "patronymic": "Patronymic",
+    "searchSponsor": "Search sponsor",
+    "search": "Search",
+    "selectedSponsor": "Selected sponsor:",
+    "remove": "Remove",
+    "branch": "Branch",
+    "selectBranch": "Select branch",
+    "number": "Number",
+    "numberHint": "Number is generated automatically",
+    "submit": "Register",
+    "submitting": "Registering...",
+    "success": "User registered successfully!",
+    "errors": {
+      "emailExists": "A user with this email already exists",
+      "generic": "Registration error. Please try again later"
+    }
+  }
+  ,
+  "personals": {
+    "in_structure": "In structure",
+    "not_in_structure": "Not in structure",
+    "all": "All"
+  }
 }
 
 

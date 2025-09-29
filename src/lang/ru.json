@@ -1,5 +1,81 @@
 {
   "welcome": "Добро пожаловать"
+  ,
+  "auth": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "logout": "Выйти",
+    "email": "Эл. почта",
+    "password": "Пароль",
+    "name": "Имя",
+    "submit": "Отправить",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "clientId": "ID клиента",
+    "clientSecret": "Секрет клиента"
+    ,
+    "showPassword": "Показать пароль",
+    "errors": {
+      "badCredentials": "Неверный логин или пароль",
+      "generic": "Ошибка. Попробуйте позже"
+    }
+  }
+  ,
+  "ui": {
+    "language": "Язык",
+    "menu": "Меню"
+  }
+  ,
+  "home": {
+    "stage": "Этап",
+    "cycle": "Цикл",
+    "left": "Лево",
+    "right": "Право",
+    "multibonus": "Мультибонус",
+    "structure_bonus": "Структурный",
+    "sponsor_bonus": "Спонсорский"
+    ,
+    "registration_link": "Ссылка для регистрации",
+    "copied": "Скопировано",
+    "all_time": "Бонусы за всё время"
+  }
+  ,
+  "menu": {
+    "home": "Главная",
+    "structure": "Структура",
+    "bonuses": "Бонусы",
+    "personals": "Личники"
+  }
+  ,
+  "register": {
+    "form": "Форма регистрации",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Имя",
+    "lastname": "Фамилия",
+    "patronymic": "Отчество",
+    "searchSponsor": "Поиск спонсора",
+    "search": "Поиск",
+    "selectedSponsor": "Выбранный спонсор:",
+    "remove": "Удалить",
+    "branch": "Филиал",
+    "selectBranch": "Выберите филиал",
+    "number": "Номер",
+    "numberHint": "Номер генерируется автоматически",
+    "submit": "Зарегистрировать",
+    "submitting": "Регистрация...",
+    "success": "Пользователь успешно зарегистрирован!",
+    "errors": {
+      "emailExists": "Пользователь с таким email уже существует",
+      "generic": "Ошибка регистрации. Попробуйте позже"
+    }
+  }
+  ,
+  "personals": {
+    "in_structure": "В структуре",
+    "not_in_structure": "Не в структуре",
+    "all": "Все"
+  }
 }
 
 

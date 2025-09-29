@@ -1,5 +1,81 @@
 {
   "welcome": "Xush kelibsiz"
+  ,
+  "auth": {
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "logout": "Chiqish",
+    "email": "Email",
+    "password": "Parol",
+    "name": "Ism",
+    "submit": "Yuborish",
+    "noAccount": "Hisob yo'qmi?",
+    "haveAccount": "Hisobingiz bormi?",
+    "clientId": "Mijoz ID",
+    "clientSecret": "Mijoz siri"
+    ,
+    "showPassword": "Parolni ko'rsatish",
+    "errors": {
+      "badCredentials": "Email yoki parol noto'g'ri",
+      "generic": "Xatolik. Keyinroq yana urinib ko'ring"
+    }
+  }
+  ,
+  "ui": {
+    "language": "Til",
+    "menu": "Menyu"
+  }
+  ,
+  "home": {
+    "stage": "Bosqich",
+    "cycle": "Sikl",
+    "left": "Chap",
+    "right": "O'ng",
+    "multibonus": "Multibonus",
+    "structure_bonus": "Tuzilma",
+    "sponsor_bonus": "Homiylik"
+    ,
+    "registration_link": "Ro'yxatdan o'tish havolasi",
+    "copied": "Nusxalandi",
+    "all_time": "Butun vaqt"
+  }
+  ,
+  "menu": {
+    "home": "Bosh sahifa",
+    "structure": "Tuzilma",
+    "bonuses": "Bonuslar",
+    "personals": "Shaxsiylar"
+  }
+  ,
+  "register": {
+    "form": "Ro'yxatdan o'tish shakli",
+    "email": "Email",
+    "password": "Parol",
+    "name": "Ism",
+    "lastname": "Familiya",
+    "patronymic": "Otasining ismi",
+    "searchSponsor": "Homiy qidirish",
+    "search": "Qidirish",
+    "selectedSponsor": "Tanlangan homiy:",
+    "remove": "O'chirish",
+    "branch": "Filial",
+    "selectBranch": "Filialni tanlang",
+    "number": "Raqam",
+    "numberHint": "Raqam avtomatik yaratiladi",
+    "submit": "Ro'yxatdan o'tkazish",
+    "submitting": "Ro'yxatdan o'tkazilmoqda...",
+    "success": "Foydalanuvchi muvaffaqiyatli ro'yxatdan o'tdi!",
+    "errors": {
+      "emailExists": "Bu email bilan foydalanuvchi allaqachon mavjud",
+      "generic": "Ro'yxatdan o'tishda xatolik. Keyinroq urinib ko'ring"
+    }
+  }
+  ,
+  "personals": {
+    "in_structure": "Tuzilmada",
+    "not_in_structure": "Tuzilmada emas",
+    "all": "Hammasi"
+  }
 }
 
 

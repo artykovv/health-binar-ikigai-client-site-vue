@@ -1,5 +1,81 @@
 {
   "welcome": "Кош келиңиз"
+  ,
+  "auth": {
+    "login": "Кирүү",
+    "register": "Катталуу",
+    "logout": "Чыгуу",
+    "email": "Email",
+    "password": "Сырсөз",
+    "name": "Ат",
+    "submit": "Жөнөтүү",
+    "noAccount": "Аккаунт жокпу?",
+    "haveAccount": "Аккаунт барбы?",
+    "clientId": "Клиент ID",
+    "clientSecret": "Клиент сыры"
+    ,
+    "showPassword": "Сырсөздү көрсөтүү",
+    "errors": {
+      "badCredentials": "Email же сырсөз туура эмес",
+      "generic": "Ката. Кийинчерээк дагы аракет кылыңыз"
+    }
+  }
+  ,
+  "ui": {
+    "language": "Тил",
+    "menu": "Меню"
+  }
+  ,
+  "home": {
+    "stage": "Этап",
+    "cycle": "Цикл",
+    "left": "Сол",
+    "right": "Оң",
+    "multibonus": "Мультибонус",
+    "structure_bonus": "Структура",
+    "sponsor_bonus": "Спонсордук"
+    ,
+    "registration_link": "Катталуу шилтемеси",
+    "copied": "Көчүрүлдү",
+    "all_time": "Баардык убакыт"
+  }
+  ,
+  "menu": {
+    "home": "Башкы",
+    "structure": "Структура",
+    "bonuses": "Бонустар",
+    "personals": "Жеке"
+  }
+  ,
+  "register": {
+    "form": "Катталуу формасы",
+    "email": "Email",
+    "password": "Сырсөз",
+    "name": "Аты",
+    "lastname": "Фамилия",
+    "patronymic": "Атасынын аты",
+    "searchSponsor": "Спонсор издөө",
+    "search": "Издөө",
+    "selectedSponsor": "Тандалган спонсор:",
+    "remove": "Өчүрүү",
+    "branch": "Филиал",
+    "selectBranch": "Филиалды тандаңыз",
+    "number": "Номер",
+    "numberHint": "Номер автоматтык түрдө түзүлөт",
+    "submit": "Каттоо",
+    "submitting": "Катталууда...",
+    "success": "Колдонуучу ийгиликтүү катталды!",
+    "errors": {
+      "emailExists": "Бул email менен колдонуучу мурунтан эле бар",
+      "generic": "Катталууда ката кетти. Кийинчерээк аракет кылыңыз"
+    }
+  }
+  ,
+  "personals": {
+    "in_structure": "Структурада",
+    "not_in_structure": "Структурада эмес",
+    "all": "Баары"
+  }
 }
 
 
