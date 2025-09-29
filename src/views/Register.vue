@@ -167,7 +167,7 @@ onMounted(() => { loadBranches(); generatePersonalNumber() })
                 <div class="grid md:grid-cols-12 gap-4">
                   <div class="md:col-span-12">
                     <label for="personal_number" class="block text-sm font-medium mb-1">{{ t('register.number') }}</label>
-                    <input v-model="form.personal_number" type="text" class="block w-full rounded-md bg-white text-black px-3 py-2 text-sm" id="personal_number" disabled :placeholder="t('register.numberHint')">
+                    <input v-model="form.personal_number" type="text" class="block w-full rounded-md bg-stone-400 text-white px-3 py-2 text-sm cursor-not-allowed" id="personal_number" disabled :placeholder="t('register.numberHint')">
                     <small class="text-gray-500 dark:text-white">{{ t('register.numberHint') }}</small>
                   </div>
                 </div>
