@@ -38,10 +38,10 @@ async function loadBranches() {
 
 async function searchSponsors() {
   const q = sponsorSearch.value.trim()
-  if (!q) { sponsorResults.value = []; return }
+  if (!q || q.length < 3) { sponsorResults.value = []; return }
   searchingSponsors.value = true
   try {
-    const data = await http(`/api/participants/?page=1&page_size=20&search=${encodeURIComponent(q)}`)
+    const data = await http(`/api/participants/personal_number/?personal_number=${encodeURIComponent(q)}`)
     sponsorResults.value = data?.participants || []
   } catch (_) {
     sponsorResults.value = []
