@@ -67,6 +67,17 @@ const allTimeTotal = computed(() => {
   return left + right
 })
 
+// Remaining sides: base - total
+const leftRemaining = computed(() => {
+  const b = bonus.value || {}
+  return Number(b.total_left || 0) - Number(b.base_left || 0)
+})
+
+const rightRemaining = computed(() => {
+  const b = bonus.value || {}
+  return Number(b.total_right || 0) - Number(b.base_right || 0)
+})
+
 // Weekly summary selection
 const START_ANCHOR = new Date('2025-09-23T00:00:00')
 const weeks = ref([])
@@ -190,8 +201,8 @@ onUnmounted(() => {
             <div v-if="bonuses" class="rounded-xl bg-white/20 p-4 col-span-2"><div class="text-xs opacity-80">{{ t('home.all_time') }}</div><div class="text-2xl font-semibold">{{ allTimeTotal }}</div></div>
             <div class="rounded-xl bg-white/20 p-4"><div class="text-xs opacity-80">{{ t('home.cycle') }}</div><div class="text-2xl font-semibold">{{ bonus.cycle_number ?? '-' }}</div></div>
             <div class="rounded-xl bg-white/20 p-4"><div class="text-xs opacity-80">{{ t('home.stage') }}</div><div class="text-2xl font-semibold">{{ bonus.stage_number ?? '-' }}</div></div>
-            <div class="rounded-xl bg-white/20 p-4"><div class="text-xs opacity-80">{{ t('home.left') }}</div><div class="text-2xl font-semibold">{{ bonus.total_left ?? '-' }}</div></div>
-            <div class="rounded-xl bg-white/20 p-4"><div class="text-xs opacity-80">{{ t('home.right') }}</div><div class="text-2xl font-semibold">{{ bonus.total_right ?? '-' }}</div></div>
+            <div class="rounded-xl bg-white/20 p-4"><div class="text-xs opacity-80">{{ t('home.left') }}</div><div class="text-2xl font-semibold">{{ leftRemaining }}</div></div>
+            <div class="rounded-xl bg-white/20 p-4"><div class="text-xs opacity-80">{{ t('home.right') }}</div><div class="text-2xl font-semibold">{{ rightRemaining }}</div></div>
           </div>
         </div>
 
