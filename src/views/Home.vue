@@ -215,17 +215,17 @@ onUnmounted(() => {
                   <div class="mb-3">
                     <div class="text-sm opacity-90 mb-2">Неделя</div>
                     <div ref="weekDropdownRef" class="relative">
-                      <button type="button" @click="toggleWeekDropdown" class="w-full group flex items-center justify-between rounded-md bg-white text-black px-3 py-2 text-sm shadow ring-1 ring-white/20 hover:opacity-90 dark:bg-[#282828] dark:text-white dark:ring-white/10 dark:hover:ring-white/20">
+                      <button type="button" @click="toggleWeekDropdown" class="w-full group flex items-center justify-between rounded-md bg-white text-black px-3 py-2 text-sm shadow ring-1 ring-white/20 hover:opacity-90 dark:bg-[#437d63] dark:text-white dark:ring-white/10 dark:hover:ring-white/20">
                         <span>{{ weeks[selectedWeekIndex]?.label || '—' }}</span>
                         <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" class="h-4 w-4 stroke-zinc-500 dark:stroke-zinc-300">
                           <path d="M6 8l4 4 4-4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
                       </button>
                       <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform scale-100" leave-to-class="transform opacity-0 scale-95">
-                        <div v-if="isWeekOpen" class="absolute left-0 z-10 mt-2 w-full origin-top rounded-md bg-white text-black shadow-lg ring-1 ring-zinc-900/10 dark:bg-[#282828] dark:text-white dark:ring-white/10">
+                        <div v-if="isWeekOpen" class="absolute left-0 z-10 mt-2 w-full origin-top rounded-md bg-white text-black shadow-lg ring-1 ring-zinc-900/10 dark:bg-[#437d63] dark:text-white dark:ring-white/10">
                           <ul class="max-h-60 overflow-auto py-1">
                             <li v-for="(w, idx) in weeks" :key="w.label">
-                              <button type="button" @click="selectWeek(idx)" class="block w-full text-left px-4 py-2 text-sm" :class="idx === selectedWeekIndex ? 'bg-gray-100 text-gray-900 dark:bg-[#3f3f47] dark:text-white' : 'text-gray-700 hover:bg-gray-50 dark:text-white dark:hover:bg-[#3f3f47]'">
+                              <button type="button" @click="selectWeek(idx)" class="block w-full text-left px-4 py-2 text-sm" :class="idx === selectedWeekIndex ? 'bg-gray-100 text-gray-900 dark:bg-[#015C3B] dark:text-white' : 'text-gray-700 hover:bg-gray-50 dark:text-white dark:hover:bg-[#015C3B]'">
                                 {{ w.label }}
                               </button>
                             </li>

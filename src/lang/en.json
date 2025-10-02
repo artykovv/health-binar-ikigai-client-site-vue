@@ -1,4 +1,5 @@
 {
+  "appName": "Ikigai",
   "welcome": "Welcome"
   ,
   "auth": {
@@ -76,6 +77,15 @@
     "in_structure": "In structure",
     "not_in_structure": "Not in structure",
     "all": "All"
+  }
+  ,
+  "titles": {
+    "home": "Home",
+    "login": "Login",
+    "register": "Register",
+    "structure": "Structure",
+    "bonuses": "Bonuses",
+    "personals": "Personals"
   }
 }
 

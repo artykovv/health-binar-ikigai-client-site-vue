@@ -18,7 +18,14 @@ function displayName(p) {
   return parts.join(' ')
 }
 function displayDate(p) {
-  return p.register_at || ''
+  try {
+    if (!p.register_at) return ''
+    const d = new Date(p.register_at)
+    return new Intl.DateTimeFormat(undefined, {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit'
+    }).format(d)
+  } catch (_) { return p.register_at || '' }
 }
 
 async function loadPersonals() {

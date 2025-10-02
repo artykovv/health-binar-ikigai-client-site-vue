@@ -74,8 +74,8 @@ onMounted(() => loadTab(tab.value))
     <h1 class="text-2xl font-semibold">{{ t('menu.bonuses') }}</h1>
 
     <div class="flex gap-4 mt-3">
-      <button :style="tab === 'multi' ? activeBtnStyle : null" @click="setTab('multi')">{{ t('home.multibonus') }}</button>
       <button :style="tab === 'structure' ? activeBtnStyle : null" @click="setTab('structure')">{{ t('home.structure_bonus') }}</button>
+      <button :style="tab === 'multi' ? activeBtnStyle : null" @click="setTab('multi')">{{ t('home.multibonus') }}</button>
       <button :style="tab === 'sponsor' ? activeBtnStyle : null" @click="setTab('sponsor')">{{ t('home.sponsor_bonus') }}</button>
     </div>
 
