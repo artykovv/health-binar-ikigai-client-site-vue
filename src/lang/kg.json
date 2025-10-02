@@ -34,8 +34,9 @@
     "right": "Оң",
     "multibonus": "Мультибонус",
     "structure_bonus": "Структура",
-    "sponsor_bonus": "Спонсордук"
-    ,
+    "sponsor_bonus": "Спонсордук",
+    "week": "Жумалык бонустар",
+    "week_short": "Жума",
     "registration_link": "Катталуу шилтемеси",
     "copied": "Көчүрүлдү",
     "all_time": "Баардык убакыт"

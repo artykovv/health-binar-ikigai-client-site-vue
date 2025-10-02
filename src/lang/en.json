@@ -35,8 +35,9 @@
     "right": "Right",
     "multibonus": "Multibonus",
     "structure_bonus": "Structure",
-    "sponsor_bonus": "Sponsor"
-    ,
+    "sponsor_bonus": "Sponsor",
+    "week": "Weekly bonuses",
+    "week_short": "Week",
     "registration_link": "Registration link",
     "copied": "Copied",
     "all_time": "All time bonus"

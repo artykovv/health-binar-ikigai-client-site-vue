@@ -34,8 +34,9 @@
     "right": "O'ng",
     "multibonus": "Multibonus",
     "structure_bonus": "Tuzilma",
-    "sponsor_bonus": "Homiylik"
-    ,
+    "sponsor_bonus": "Homiylik",
+    "week": "Haftalik bonuslar",
+    "week_short": "Hafta",
     "registration_link": "Ro'yxatdan o'tish havolasi",
     "copied": "Nusxalandi",
     "all_time": "Butun vaqt"

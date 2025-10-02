@@ -34,8 +34,9 @@
     "right": "Право",
     "multibonus": "Мультибонус",
     "structure_bonus": "Структурный",
-    "sponsor_bonus": "Спонсорский"
-    ,
+    "sponsor_bonus": "Спонсорский",
+    "week": "Бонусы за неделю",
+    "week_short": "Неделя",
     "registration_link": "Ссылка для регистрации",
     "copied": "Скопировано",
     "all_time": "Бонусы за всё время"
