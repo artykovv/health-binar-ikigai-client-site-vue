@@ -131,6 +131,7 @@ onMounted(() => loadTab(tab.value))
           </div>
         <div class="mt-1 text-base font-medium">+{{ b.amount }}</div>
           <div class="text-xs opacity-80">#{{ b.cycle_number }} · {{ t('home.stage') }} {{ b.stage_number }}</div>
+          <div v-if="b.from_participant_fio" class="text-sm opacity-80 mt-2">{{ b.from_participant_fio }} {{ b.from_participant_personal_number }}</div>
         </div>
         <div v-if="sponsor.length === 0" class="text-sm text-gray-500">—</div>
       </template>
