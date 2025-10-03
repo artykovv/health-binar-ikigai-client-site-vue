@@ -12,6 +12,7 @@ const router = useRouter()
 const structure = ref(null)
 const loading = ref(false)
 const error = ref('')
+const bonusByParticipant = ref({})
 
 const myId = (() => { try { return loadMe()?.id || '' } catch (_) { return '' } })()
 const participantId = ref(route.params.id || myId)
@@ -26,6 +27,7 @@ async function fetchStructure(id) {
   try {
     const data = await http(`/api/structure/${id}`)
     structure.value = data
+    await loadBonusDataForAllNodes(data)
   } catch (e) {
     error.value = t('common_error') || 'Error'
   } finally {
@@ -33,9 +35,58 @@ async function fetchStructure(id) {
   }
 }
 
+async function loadBonusDataForAllNodes(node) {
+  if (!node) return
+  
+  const participantIds = new Set()
+  
+  function collectIds(n) {
+    if (n?.participant_id) participantIds.add(n.participant_id)
+    if (n?.left_child) collectIds(n.left_child)
+    if (n?.right_child) collectIds(n.right_child)
+  }
+  
+  collectIds(node)
+  
+  const promises = Array.from(participantIds)
+    .filter(id => !bonusByParticipant.value[id])
+    .map(async (id) => {
+      try {
+        const data = await http(`/api/data/participant_bonus_data/${id}`)
+        bonusByParticipant.value[id] = data
+      } catch (e) {
+        console.warn(`Failed to load bonus data for ${id}:`, e)
+      }
+    })
+  
+  await Promise.all(promises)
+}
+
 function hasAnyChild(node) { return !!(node?.left_child || node?.right_child) }
-function nodeStyle(node) { const style = {}; if (node && node.color) style.background = `linear-gradient(${node.color})`; return style }
-function goTo(id) { if (!id) return; router.push({ name: 'structure', params: { locale: route.params.locale, id } }) }
+function nodeStyle(node) { 
+  const style = { background: 'transparent' }
+  if (node && node.color) style.background = `linear-gradient(${node.color})`
+  return style 
+}
+
+function goTo(id) { 
+  if (!id) return
+  router.push({ name: 'structure', params: { locale: route.params.locale, id } }) 
+}
+
+function getBD(id) {
+  return bonusByParticipant.value[id] || {}
+}
+
+function currentLeft(id) {
+  const bd = getBD(id)
+  return (bd.total_left || 0) - (bd.base_left || 0)
+}
+
+function currentRight(id) {
+  const bd = getBD(id)
+  return (bd.total_right || 0) - (bd.base_right || 0)
+}
 
 onMounted(() => {
   if (!route.params.id && myId) {
@@ -43,7 +94,11 @@ onMounted(() => {
   }
   fetchStructure(participantId.value)
 })
-watch(() => route.params.id, (newId) => { participantId.value = newId || myId; fetchStructure(participantId.value) })
+
+watch(() => route.params.id, (newId) => { 
+  participantId.value = newId || myId
+  fetchStructure(participantId.value) 
+})
 </script>
 
 <template>
@@ -73,44 +128,140 @@ watch(() => route.params.id, (newId) => { participantId.value = newId || myId; f
             <div class="tree inline-block min-w-max">
             <div v-if="structure" class="node">
               <div @click="goTo(structure.participant_id)" class="node-content" :style="nodeStyle(structure)">
-                <h6 class="leading-tight">
-                  <span class="block">{{ structure.participant_lastname }}</span>
-                  <span class="block">{{ structure.participant_name }}</span>
-                  <span class="block">{{ structure.participant_patronymic }}</span>
-                </h6>
-                <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.participant_personal_number }}</button>
+                <div class="node-header">
+                  <h6 class="leading-tight">
+                    <span class="block">{{ structure.participant_lastname }}</span>
+                    <span class="block">{{ structure.participant_name }}</span>
+                    <span class="block">{{ structure.participant_patronymic }}</span>
+                  </h6>
+                  <div class="personal-number">{{ structure.participant_personal_number }}</div>
+                </div>
+                <div class="node-metrics">
+                  <div class="metric-row">
+                    <div class="metric-item">
+                      <div class="metric-value">{{ getBD(structure.participant_id).cycle_number || 0 }}</div>
+                      <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                    </div>
+                    <div class="metric-item">
+                      <div class="metric-value">{{ getBD(structure.participant_id).stage_number || 0 }}</div>
+                      <div class="metric-label">{{ t('home.stage_label') }}</div>
+                    </div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-value">{{ getBD(structure.participant_id).total_left || 0 }}</div>
+                    <div class="metric-label">{{ t('home.total') }}</div>
+                    <div class="metric-value">{{ getBD(structure.participant_id).total_right || 0 }}</div>
+                  </div>
+                  <div class="metric-row">
+                    <div class="metric-value">{{ currentLeft(structure.participant_id) }}</div>
+                    <div class="metric-label">{{ t('home.current') }}</div>
+                    <div class="metric-value">{{ currentRight(structure.participant_id) }}</div>
+                  </div>
+                </div>
               </div>
               <div class="branch" v-if="hasAnyChild(structure)">
                 <div class="node">
                   <div v-if="structure.left_child" @click="goTo(structure.left_child.participant_id)" class="node-content" :style="nodeStyle(structure.left_child)">
-                    <h6 class="leading-tight">
-                      <span class="block">{{ structure.left_child.participant_lastname }}</span>
-                      <span class="block">{{ structure.left_child.participant_name }}</span>
-                      <span class="block">{{ structure.left_child.participant_patronymic }}</span>
-                    </h6>
-                    <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.left_child.participant_personal_number }}</button>
+                    <div class="node-header">
+                      <h6 class="leading-tight">
+                        <span class="block">{{ structure.left_child.participant_lastname }}</span>
+                        <span class="block">{{ structure.left_child.participant_name }}</span>
+                        <span class="block">{{ structure.left_child.participant_patronymic }}</span>
+                      </h6>
+                      <div class="personal-number">{{ structure.left_child.participant_personal_number }}</div>
+                    </div>
+                    <div class="node-metrics">
+                      <div class="metric-row">
+                        <div class="metric-item">
+                          <div class="metric-value">{{ getBD(structure.left_child.participant_id).cycle_number || 0 }}</div>
+                          <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                        </div>
+                        <div class="metric-item">
+                          <div class="metric-value">{{ getBD(structure.left_child.participant_id).stage_number || 0 }}</div>
+                          <div class="metric-label">{{ t('home.stage_label') }}</div>
+                        </div>
+                      </div>
+                      <div class="metric-row">
+                        <div class="metric-value">{{ getBD(structure.left_child.participant_id).total_left || 0 }}</div>
+                        <div class="metric-label">{{ t('home.total') }}</div>
+                        <div class="metric-value">{{ getBD(structure.left_child.participant_id).total_right || 0 }}</div>
+                      </div>
+                      <div class="metric-row">
+                        <div class="metric-value">{{ currentLeft(structure.left_child.participant_id) }}</div>
+                        <div class="metric-label">{{ t('home.current') }}</div>
+                        <div class="metric-value">{{ currentRight(structure.left_child.participant_id) }}</div>
+                      </div>
+                    </div>
                   </div>
                   <div v-else class="node invisible"></div>
                   <div class="branch" v-if="structure.left_child && hasAnyChild(structure.left_child)">
                     <div class="node">
                       <div v-if="structure.left_child.left_child" @click="goTo(structure.left_child.left_child.participant_id)" class="node-content" :style="nodeStyle(structure.left_child.left_child)">
-                        <h6 class="leading-tight">
-                          <span class="block">{{ structure.left_child.left_child.participant_lastname }}</span>
-                          <span class="block">{{ structure.left_child.left_child.participant_name }}</span>
-                          <span class="block">{{ structure.left_child.left_child.participant_patronymic }}</span>
-                        </h6>
-                        <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.left_child.left_child.participant_personal_number }}</button>
+                        <div class="node-header">
+                          <h6 class="leading-tight">
+                            <span class="block">{{ structure.left_child.left_child.participant_lastname }}</span>
+                            <span class="block">{{ structure.left_child.left_child.participant_name }}</span>
+                            <span class="block">{{ structure.left_child.left_child.participant_patronymic }}</span>
+                          </h6>
+                          <div class="personal-number">{{ structure.left_child.left_child.participant_personal_number }}</div>
+                        </div>
+                        <div class="node-metrics">
+                          <div class="metric-row">
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.left_child.left_child.participant_id).cycle_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                            </div>
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.left_child.left_child.participant_id).stage_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.stage_label') }}</div>
+                            </div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ getBD(structure.left_child.left_child.participant_id).total_left || 0 }}</div>
+                            <div class="metric-label">{{ t('home.total') }}</div>
+                            <div class="metric-value">{{ getBD(structure.left_child.left_child.participant_id).total_right || 0 }}</div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ currentLeft(structure.left_child.left_child.participant_id) }}</div>
+                            <div class="metric-label">{{ t('home.current') }}</div>
+                            <div class="metric-value">{{ currentRight(structure.left_child.left_child.participant_id) }}</div>
+                          </div>
+                        </div>
                       </div>
                       <div v-else class="node invisible"></div>
                     </div>
                     <div class="node">
                       <div v-if="structure.left_child.right_child" @click="goTo(structure.left_child.right_child.participant_id)" class="node-content" :style="nodeStyle(structure.left_child.right_child)">
-                        <h6 class="leading-tight">
-                          <span class="block">{{ structure.left_child.right_child.participant_lastname }}</span>
-                          <span class="block">{{ structure.left_child.right_child.participant_name }}</span>
-                          <span class="block">{{ structure.left_child.right_child.participant_patronymic }}</span>
-                        </h6>
-                        <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.left_child.right_child.participant_personal_number }}</button>
+                        <div class="node-header">
+                          <h6 class="leading-tight">
+                            <span class="block">{{ structure.left_child.right_child.participant_lastname }}</span>
+                            <span class="block">{{ structure.left_child.right_child.participant_name }}</span>
+                            <span class="block">{{ structure.left_child.right_child.participant_patronymic }}</span>
+                          </h6>
+                          <div class="personal-number">{{ structure.left_child.right_child.participant_personal_number }}</div>
+                        </div>
+                        <div class="node-metrics">
+                          <div class="metric-row">
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.left_child.right_child.participant_id).cycle_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                            </div>
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.left_child.right_child.participant_id).stage_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.stage_label') }}</div>
+                            </div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ getBD(structure.left_child.right_child.participant_id).total_left || 0 }}</div>
+                            <div class="metric-label">{{ t('home.total') }}</div>
+                            <div class="metric-value">{{ getBD(structure.left_child.right_child.participant_id).total_right || 0 }}</div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ currentLeft(structure.left_child.right_child.participant_id) }}</div>
+                            <div class="metric-label">{{ t('home.current') }}</div>
+                            <div class="metric-value">{{ currentRight(structure.left_child.right_child.participant_id) }}</div>
+                          </div>
+                        </div>
                       </div>
                       <div v-else class="node invisible"></div>
                     </div>
@@ -119,34 +270,106 @@ watch(() => route.params.id, (newId) => { participantId.value = newId || myId; f
 
                 <div class="node">
                   <div v-if="structure.right_child" @click="goTo(structure.right_child.participant_id)" class="node-content" :style="nodeStyle(structure.right_child)">
-                    <h6 class="leading-tight">
-                      <span class="block">{{ structure.right_child.participant_lastname }}</span>
-                      <span class="block">{{ structure.right_child.participant_name }}</span>
-                      <span class="block">{{ structure.right_child.participant_patronymic }}</span>
-                    </h6>
-                    <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.right_child.participant_personal_number }}</button>
+                    <div class="node-header">
+                      <h6 class="leading-tight">
+                        <span class="block">{{ structure.right_child.participant_lastname }}</span>
+                        <span class="block">{{ structure.right_child.participant_name }}</span>
+                        <span class="block">{{ structure.right_child.participant_patronymic }}</span>
+                      </h6>
+                      <div class="personal-number">{{ structure.right_child.participant_personal_number }}</div>
+                    </div>
+                    <div class="node-metrics">
+                      <div class="metric-row">
+                        <div class="metric-item">
+                          <div class="metric-value">{{ getBD(structure.right_child.participant_id).cycle_number || 0 }}</div>
+                          <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                        </div>
+                        <div class="metric-item">
+                          <div class="metric-value">{{ getBD(structure.right_child.participant_id).stage_number || 0 }}</div>
+                          <div class="metric-label">{{ t('home.stage_label') }}</div>
+                        </div>
+                      </div>
+                      <div class="metric-row">
+                        <div class="metric-value">{{ getBD(structure.right_child.participant_id).total_left || 0 }}</div>
+                        <div class="metric-label">{{ t('home.total') }}</div>
+                        <div class="metric-value">{{ getBD(structure.right_child.participant_id).total_right || 0 }}</div>
+                      </div>
+                      <div class="metric-row">
+                        <div class="metric-value">{{ currentLeft(structure.right_child.participant_id) }}</div>
+                        <div class="metric-label">{{ t('home.current') }}</div>
+                        <div class="metric-value">{{ currentRight(structure.right_child.participant_id) }}</div>
+                      </div>
+                    </div>
                   </div>
                   <div v-else class="node invisible"></div>
                   <div class="branch" v-if="structure.right_child && hasAnyChild(structure.right_child)">
                     <div class="node">
                       <div v-if="structure.right_child.left_child" @click="goTo(structure.right_child.left_child.participant_id)" class="node-content" :style="nodeStyle(structure.right_child.left_child)">
-                        <h6 class="leading-tight">
-                          <span class="block">{{ structure.right_child.left_child.participant_lastname }}</span>
-                          <span class="block">{{ structure.right_child.left_child.participant_name }}</span>
-                          <span class="block">{{ structure.right_child.left_child.participant_patronymic }}</span>
-                        </h6>
-                        <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.right_child.left_child.participant_personal_number }}</button>
+                        <div class="node-header">
+                          <h6 class="leading-tight">
+                            <span class="block">{{ structure.right_child.left_child.participant_lastname }}</span>
+                            <span class="block">{{ structure.right_child.left_child.participant_name }}</span>
+                            <span class="block">{{ structure.right_child.left_child.participant_patronymic }}</span>
+                          </h6>
+                          <div class="personal-number">{{ structure.right_child.left_child.participant_personal_number }}</div>
+                        </div>
+                        <div class="node-metrics">
+                          <div class="metric-row">
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.right_child.left_child.participant_id).cycle_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                            </div>
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.right_child.left_child.participant_id).stage_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.stage_label') }}</div>
+                            </div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ getBD(structure.right_child.left_child.participant_id).total_left || 0 }}</div>
+                            <div class="metric-label">{{ t('home.total') }}</div>
+                            <div class="metric-value">{{ getBD(structure.right_child.left_child.participant_id).total_right || 0 }}</div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ currentLeft(structure.right_child.left_child.participant_id) }}</div>
+                            <div class="metric-label">{{ t('home.current') }}</div>
+                            <div class="metric-value">{{ currentRight(structure.right_child.left_child.participant_id) }}</div>
+                          </div>
+                        </div>
                       </div>
                       <div v-else class="node invisible"></div>
                     </div>
                     <div class="node">
                       <div v-if="structure.right_child.right_child" @click="goTo(structure.right_child.right_child.participant_id)" class="node-content" :style="nodeStyle(structure.right_child.right_child)">
-                        <h6 class="leading-tight">
-                          <span class="block">{{ structure.right_child.right_child.participant_lastname }}</span>
-                          <span class="block">{{ structure.right_child.right_child.participant_name }}</span>
-                          <span class="block">{{ structure.right_child.right_child.participant_patronymic }}</span>
-                        </h6>
-                        <button class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-gray-800 text-xs hover:bg-gray-200 mt-1 dark:bg-[#3f3f47] dark:text-white dark:hover:bg-[#4a4a52]">{{ structure.right_child.right_child.participant_personal_number }}</button>
+                        <div class="node-header">
+                          <h6 class="leading-tight">
+                            <span class="block">{{ structure.right_child.right_child.participant_lastname }}</span>
+                            <span class="block">{{ structure.right_child.right_child.participant_name }}</span>
+                            <span class="block">{{ structure.right_child.right_child.participant_patronymic }}</span>
+                          </h6>
+                          <div class="personal-number">{{ structure.right_child.right_child.participant_personal_number }}</div>
+                        </div>
+                        <div class="node-metrics">
+                          <div class="metric-row">
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.right_child.right_child.participant_id).cycle_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.cycle_label') }}</div>
+                            </div>
+                            <div class="metric-item">
+                              <div class="metric-value">{{ getBD(structure.right_child.right_child.participant_id).stage_number || 0 }}</div>
+                              <div class="metric-label">{{ t('home.stage_label') }}</div>
+                            </div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ getBD(structure.right_child.right_child.participant_id).total_left || 0 }}</div>
+                            <div class="metric-label">{{ t('home.total') }}</div>
+                            <div class="metric-value">{{ getBD(structure.right_child.right_child.participant_id).total_right || 0 }}</div>
+                          </div>
+                          <div class="metric-row">
+                            <div class="metric-value">{{ currentLeft(structure.right_child.right_child.participant_id) }}</div>
+                            <div class="metric-label">{{ t('home.current') }}</div>
+                            <div class="metric-value">{{ currentRight(structure.right_child.right_child.participant_id) }}</div>
+                          </div>
+                        </div>
                       </div>
                       <div v-else class="node invisible"></div>
                     </div>
@@ -193,7 +416,78 @@ watch(() => route.params.id, (newId) => { participantId.value = newId || myId; f
   .tree .node:first-child::after { border-radius: 5px 0 0 0; }
   .tree .branch::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 1px solid #ccc; width: 0; height: 20px; }
   .tree .node-content {
-    text-decoration: none; color: #000000; font-family: arial, verdana, tahoma; font-size: 11px; display: inline-block; border-radius: 5px; transition: all 0.5s; cursor: pointer; border: 1px solid #000000; background-color: #ffffff; padding: 12px 16px;
+    text-decoration: none; color: #000000; font-family: arial, verdana, tahoma; font-size: 10px; display: inline-grid; place-items: center; border-radius: 5px; transition: all 0.5s; cursor: pointer; border: 1px solid #000000; background-color: #ffffff; padding: 8px; width: 100px; height: 100px;
+  }
+  
+  .node-header {
+    text-align: center;
+  }
+  
+  .node-header h6 {
+    font-size: 9px;
+    margin: 0;
+    line-height: 1.1;
+    color: #000000;
+  }
+  
+  .personal-number {
+    font-size: 8px;
+    color: #666;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  
+  .node-metrics {
+    margin-top: 2px;
+  }
+  
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8px;
+    margin-bottom: 4px;
+    gap: 6px;
+  }
+  
+  .metric-item {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .metric-label {
+    color: #666;
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 500;
+  }
+  
+  .metric-value {
+    font-weight: 600;
+    line-height: 1;
+    font-size: 8px;
+    color: #000000;
+  }
+  
+  /* Dark mode styles */
+  :root.dark .tree .node-content {
+    color: #ffffff;
+  }
+  
+  :root.dark .node-header h6 {
+    color: #ffffff;
+  }
+  
+  :root.dark .personal-number {
+    color: #999;
+  }
+  
+  :root.dark .metric-label {
+    color: #999;
+  }
+  
+  :root.dark .metric-value {
+    color: #ffffff;
   }
   .tree .node-content:hover { background: #ffffff; color: #000; }
   .node.invisible { visibility: hidden; }

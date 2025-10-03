@@ -39,7 +39,11 @@
     "week_short": "Неделя",
     "registration_link": "Ссылка для регистрации",
     "copied": "Скопировано",
-    "all_time": "Бонусы за всё время"
+    "all_time": "Бонусы за всё время",
+    "total": "Общий",
+    "current": "Текущий",
+    "cycle_label": "Цикл",
+    "stage_label": "Этап"
   }
   ,
   "menu": {

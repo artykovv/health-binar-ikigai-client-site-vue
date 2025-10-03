@@ -40,7 +40,11 @@
     "week_short": "Week",
     "registration_link": "Registration link",
     "copied": "Copied",
-    "all_time": "All time bonus"
+    "all_time": "All time bonus",
+    "total": "Total",
+    "current": "Current",
+    "cycle_label": "Cycle",
+    "stage_label": "Stage"
   }
   ,
   "menu": {

@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   server: {
     allowedHosts: [
-      '7abf8efc6c09.ngrok-free.app', // 👈 добавьте сюда свой домен ngrok
+      '65e368bfdf84.ngrok-free.app', // 👈 добавьте сюда свой домен ngrok
     ],
   },
   resolve: {

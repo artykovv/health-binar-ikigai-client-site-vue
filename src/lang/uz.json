@@ -39,7 +39,11 @@
     "week_short": "Hafta",
     "registration_link": "Ro'yxatdan o'tish havolasi",
     "copied": "Nusxalandi",
-    "all_time": "Butun vaqt"
+    "all_time": "Butun vaqt",
+    "total": "Jami",
+    "current": "Joriy",
+    "cycle_label": "Sikl",
+    "stage_label": "Bosqich"
   }
   ,
   "menu": {

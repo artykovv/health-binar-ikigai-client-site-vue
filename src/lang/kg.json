@@ -39,7 +39,11 @@
     "week_short": "Жума",
     "registration_link": "Катталуу шилтемеси",
     "copied": "Көчүрүлдү",
-    "all_time": "Баардык убакыт"
+    "all_time": "Баардык убакыт",
+    "total": "Жалпы",
+    "current": "Учурдагы",
+    "cycle_label": "Цикл",
+    "stage_label": "Этап"
   }
   ,
   "menu": {
