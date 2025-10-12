@@ -35,6 +35,11 @@
     "multibonus": "Multibonus",
     "structure_bonus": "Tuzilma",
     "sponsor_bonus": "Homiylik",
+    "gifts": "Sovg'alar",
+    "health_day": "Health Day",
+    "depth": "Chuqurlik",
+    "issued": "Berilgan",
+    "not_issued": "Berilmagan",
     "week": "Haftalik bonuslar",
     "week_short": "Hafta",
     "registration_link": "Ro'yxatdan o'tish havolasi",
@@ -80,7 +85,11 @@
   "personals": {
     "in_structure": "Tuzilmada",
     "not_in_structure": "Tuzilmada emas",
-    "all": "Hammasi"
+    "all": "Hammasi",
+    "time_until_stage_close": "Bosqich yopilishiga qoldi",
+    "days": "kun",
+    "hours": "soat",
+    "minutes": "daqiqa"
   }
   ,
   "titles": {

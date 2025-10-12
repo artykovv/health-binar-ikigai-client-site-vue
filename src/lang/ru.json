@@ -35,6 +35,11 @@
     "multibonus": "Мультибонус",
     "structure_bonus": "Структурный",
     "sponsor_bonus": "Спонсорский",
+    "gifts": "Подарки",
+    "health_day": "Health Day",
+    "depth": "Глубина",
+    "issued": "Выдано",
+    "not_issued": "Не выдано",
     "week": "Бонусы за неделю",
     "week_short": "Неделя",
     "registration_link": "Ссылка для регистрации",
@@ -80,7 +85,11 @@
   "personals": {
     "in_structure": "В структуре",
     "not_in_structure": "Не в структуре",
-    "all": "Все"
+    "all": "Все",
+    "time_until_stage_close": "До закрытия этапа осталось",
+    "days": "дней",
+    "hours": "часов",
+    "minutes": "минут"
   }
   ,
   "titles": {

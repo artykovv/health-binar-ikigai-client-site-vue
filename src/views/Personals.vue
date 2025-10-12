@@ -9,7 +9,7 @@ const { t } = useI18n()
 const participants = ref([])
 const loading = ref(false)
 const error = ref('')
-const filter = ref('all') // 'all' | 'true' | 'false'
+const filter = ref('true') // 'all' | 'true' | 'false'
 function setFilter(value) { filter.value = value; loadPersonals() }
 const activeBtnStyle = { backgroundColor: '#015C3B', color: '#fff', borderRadius: '9999px', padding: '4px 12px' }
 
@@ -26,6 +26,26 @@ function displayDate(p) {
       hour: '2-digit', minute: '2-digit'
     }).format(d)
   } catch (_) { return p.register_at || '' }
+}
+
+function timeUntilStageClose(p) {
+  try {
+    if (!p.bonus_data?.stage_start_date) return null
+    const startDate = new Date(p.bonus_data.stage_start_date)
+    const closeDate = new Date(startDate.getTime() + 56 * 24 * 60 * 60 * 1000) // +56 days
+    const now = new Date()
+    const diff = closeDate - now
+    
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0 }
+    
+    const days = Math.floor(diff / (24 * 60 * 60 * 1000))
+    const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000))
+    const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000))
+    
+    return { days, hours, minutes }
+  } catch (_) {
+    return null
+  }
 }
 
 async function loadPersonals() {
@@ -91,6 +111,14 @@ onMounted(loadPersonals)
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0v-4.5zM10 14.75a.875.875 0 100-1.75.875.875 0 000 1.75z" clip-rule="evenodd"/></svg>
             {{ t('personals.not_in_structure') }}
           </span>
+        </div>
+        <div v-if="p.registered && timeUntilStageClose(p)" class="mt-2 text-xs opacity-90">
+          <div class="font-medium">{{ t('personals.time_until_stage_close') }}:</div>
+          <div class="mt-0.5">
+            {{ timeUntilStageClose(p).days }} {{ t('personals.days') }} 
+            {{ timeUntilStageClose(p).hours }} {{ t('personals.hours') }} 
+            {{ timeUntilStageClose(p).minutes }} {{ t('personals.minutes') }}
+          </div>
         </div>
       </div>
       <div v-if="participants.length === 0" class="text-sm text-gray-500">—</div>

@@ -36,6 +36,11 @@
     "multibonus": "Multibonus",
     "structure_bonus": "Structure",
     "sponsor_bonus": "Sponsor",
+    "gifts": "Gifts",
+    "health_day": "Health Day",
+    "depth": "Depth",
+    "issued": "Issued",
+    "not_issued": "Not issued",
     "week": "Weekly bonuses",
     "week_short": "Week",
     "registration_link": "Registration link",
@@ -81,7 +86,11 @@
   "personals": {
     "in_structure": "In structure",
     "not_in_structure": "Not in structure",
-    "all": "All"
+    "all": "All",
+    "time_until_stage_close": "Time until stage close",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes"
   }
   ,
   "titles": {

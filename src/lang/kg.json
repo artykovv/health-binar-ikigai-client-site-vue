@@ -35,6 +35,11 @@
     "multibonus": "Мультибонус",
     "structure_bonus": "Структура",
     "sponsor_bonus": "Спонсордук",
+    "gifts": "Белектер",
+    "health_day": "Health Day",
+    "depth": "Тереңдик",
+    "issued": "Берилди",
+    "not_issued": "Берилген жок",
     "week": "Жумалык бонустар",
     "week_short": "Жума",
     "registration_link": "Катталуу шилтемеси",
@@ -80,7 +85,11 @@
   "personals": {
     "in_structure": "Структурада",
     "not_in_structure": "Структурада эмес",
-    "all": "Баары"
+    "all": "Баары",
+    "time_until_stage_close": "Этап жабылууга калды",
+    "days": "күн",
+    "hours": "саат",
+    "minutes": "мүнөт"
   }
   ,
   "titles": {

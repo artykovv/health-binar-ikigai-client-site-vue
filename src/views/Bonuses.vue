@@ -6,12 +6,14 @@ import { loadMe } from '@/utils/authStorage'
 
 const { t } = useI18n()
 
-const tab = ref('structure') // 'multi' | 'structure' | 'sponsor'
+const tab = ref('structure') // 'multi' | 'structure' | 'sponsor' | 'gifts' | 'health_day'
 const loading = ref(false)
 const error = ref('')
 const multi = ref([])
 const structure = ref([])
 const sponsor = ref([])
+const gifts = ref([])
+const healthDay = ref([])
 
 const activeBtnStyle = { backgroundColor: '#015C3B', color: '#fff', borderRadius: '9999px', padding: '4px 12px' }
 
@@ -54,6 +56,12 @@ async function loadTab(which) {
     if (which === 'sponsor' && sponsor.value.length === 0) {
       sponsor.value = await http(`/api/bonuses/sponsor_bonuses?${query}`)
     }
+    if (which === 'gifts' && gifts.value.length === 0) {
+      gifts.value = await http(`/api/bonuses/gifts?${query}`)
+    }
+    if (which === 'health_day' && healthDay.value.length === 0) {
+      healthDay.value = await http(`/api/bonuses/health_day?participant_id=${id}`)
+    }
   } catch (e) {
     error.value = e?.message || 'Error'
   } finally {
@@ -73,10 +81,12 @@ onMounted(() => loadTab(tab.value))
   <div class="py-6">
     <h1 class="text-2xl font-semibold">{{ t('menu.bonuses') }}</h1>
 
-    <div class="flex gap-4 mt-3">
+    <div class="flex gap-4 mt-3 flex-wrap">
       <button :style="tab === 'structure' ? activeBtnStyle : null" @click="setTab('structure')">{{ t('home.structure_bonus') }}</button>
-      <button :style="tab === 'multi' ? activeBtnStyle : null" @click="setTab('multi')">{{ t('home.multibonus') }}</button>
       <button :style="tab === 'sponsor' ? activeBtnStyle : null" @click="setTab('sponsor')">{{ t('home.sponsor_bonus') }}</button>
+      <button :style="tab === 'health_day' ? activeBtnStyle : null" @click="setTab('health_day')">{{ t('home.health_day') }}</button>
+      <button :style="tab === 'gifts' ? activeBtnStyle : null" @click="setTab('gifts')">{{ t('home.gifts') }}</button>
+      <button :style="tab === 'multi' ? activeBtnStyle : null" @click="setTab('multi')">{{ t('home.multibonus') }}</button>
     </div>
 
     <div v-if="loading" class="flex items-center justify-center min-h-[200px] mt-4">
@@ -107,6 +117,11 @@ onMounted(() => loadTab(tab.value))
           </div>
           <div class="mt-1 text-base font-medium">+{{ b.amount }}</div>
           <div class="text-xs opacity-80">#{{ b.cycle_number }} · {{ t('home.stage') }} {{ b.stage_number }}</div>
+          <div class="text-xs mt-1">
+            <span :class="b.status === 'paid' ? 'text-green-300' : 'text-yellow-300'">
+              {{ b.status === 'paid' ? t('home.issued') : t('home.not_issued') }}
+            </span>
+          </div>
         </div>
         <div v-if="multi.length === 0" class="text-sm text-gray-500">—</div>
       </template>
@@ -119,11 +134,16 @@ onMounted(() => loadTab(tab.value))
           </div>
           <div class="mt-1 text-base font-medium">+{{ b.amount }}</div>
           <div class="text-xs opacity-80">#{{ b.cycle_number }} · {{ t('home.stage') }} {{ b.stage_number }}</div>
+          <div class="text-xs mt-1">
+            <span :class="b.status === 'paid' ? 'text-green-300' : 'text-yellow-300'">
+              {{ b.status === 'paid' ? t('home.issued') : t('home.not_issued') }}
+            </span>
+          </div>
         </div>
         <div v-if="structure.length === 0" class="text-sm text-gray-500">—</div>
       </template>
 
-      <template v-else>
+      <template v-else-if="tab === 'sponsor'">
         <div v-for="b in sponsor" :key="`sp-${b.id}`" class="rounded-2xl p-4 shadow bg-[#015C3B] text-white">
           <div class="flex items-center justify-between">
             <div class="text-sm opacity-80">{{ t('home.sponsor_bonus') }}</div>
@@ -132,8 +152,53 @@ onMounted(() => loadTab(tab.value))
         <div class="mt-1 text-base font-medium">+{{ b.amount }}</div>
           <div class="text-xs opacity-80">#{{ b.cycle_number }} · {{ t('home.stage') }} {{ b.stage_number }}</div>
           <div v-if="b.from_participant_fio" class="text-sm opacity-80 mt-2">{{ b.from_participant_fio }} {{ b.from_participant_personal_number }}</div>
+          <div class="text-xs mt-1">
+            <span :class="b.status === 'paid' ? 'text-green-300' : 'text-yellow-300'">
+              {{ b.status === 'paid' ? t('home.issued') : t('home.not_issued') }}
+            </span>
+          </div>
         </div>
         <div v-if="sponsor.length === 0" class="text-sm text-gray-500">—</div>
+      </template>
+
+      <template v-else-if="tab === 'gifts'">
+        <div v-for="b in gifts" :key="`g-${b.id}`" class="rounded-2xl p-4 shadow bg-[#015C3B] text-white">
+          <div class="flex items-center justify-between">
+            <div class="text-sm opacity-80">{{ t('home.gifts') }}</div>
+            <div class="text-xs opacity-80">{{ formatDate(b.received_at) }}</div>
+          </div>
+          <div class="mt-1 text-base font-medium">{{ b.reward }}</div>
+          <div class="text-xs opacity-80">#{{ b.cycle_number }} · {{ t('home.stage') }} {{ b.stage_number }}</div>
+          <div v-if="b.branch" class="text-xs opacity-80 mt-1">{{ b.branch }}</div>
+          <div class="text-xs mt-1">
+            <span :class="b.status === 'paid' ? 'text-green-300' : 'text-yellow-300'">
+              {{ b.status === 'paid' ? t('home.issued') : t('home.not_issued') }}
+            </span>
+          </div>
+        </div>
+        <div v-if="gifts.length === 0" class="text-sm text-gray-500">—</div>
+      </template>
+
+      <template v-else-if="tab === 'health_day'">
+        <div v-for="b in healthDay" :key="`hd-${b.id}`" class="rounded-2xl p-4 shadow bg-[#015C3B] text-white">
+          <div class="flex items-center justify-between">
+            <div class="text-sm opacity-80">{{ t('home.health_day') }}</div>
+            <div class="text-xs opacity-80">{{ formatDate(b.received_at) }}</div>
+          </div>
+          <div class="mt-1 text-base font-medium">+{{ b.amount }}</div>
+          <div class="text-xs opacity-80">{{ t('home.depth') }} {{ b.depth }} · {{ b.branch }}</div>
+          <div v-if="b.from_participant_fio" class="text-sm opacity-80 mt-2">{{ b.from_participant_fio }} {{ b.from_participant_personal_number }}</div>
+          <div class="text-xs mt-1">
+            <span :class="b.status === 'paid' ? 'text-green-300' : 'text-yellow-300'">
+              {{ b.status === 'paid' ? t('home.issued') : t('home.not_issued') }}
+            </span>
+          </div>
+        </div>
+        <div v-if="healthDay.length === 0" class="text-sm text-gray-500">—</div>
+      </template>
+
+      <template v-else>
+        <div class="text-sm text-gray-500">—</div>
       </template>
     </div>
   </div>
