@@ -221,6 +221,11 @@ onUnmounted(() => {
         </div>
         <!-- Content -->
         <div v-else-if="me">
+          <!-- Account not activated warning -->
+          <div v-if="!me.registered" class="mb-4 rounded-2xl p-4 shadow overflow-hidden bg-red-500 text-white">
+            <div class="text-center font-medium">{{ t('home.account_not_activated') }}</div>
+          </div>
+          
           <!-- Passport incomplete warning -->
           <div v-if="isPassportIncomplete" class="mb-4 rounded-2xl p-4 shadow overflow-hidden bg-yellow-500 text-white">
             <div class="text-center font-medium mb-2">{{ t('home.passport_incomplete') }}</div>

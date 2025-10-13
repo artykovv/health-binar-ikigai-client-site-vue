@@ -46,6 +46,7 @@
     "copied": "Nusxalandi",
     "all_time": "Butun vaqt",
     "passport_incomplete": "Iltimos, pasport ma'lumotlaringizni to'ldiring",
+    "account_not_activated": "Bu kabinet faollashtirilmagan",
     "total": "Jami",
     "current": "Joriy",
     "cycle_label": "Sikl",
@@ -122,7 +123,7 @@
     "passport_issuer": "Kim tomonidan berilgan",
     "passport_issue_date": "Berilgan sana",
     "date_birth": "Tug'ilgan sana",
-    "bank": "Bank",
+    "bank": "Mobil Bank",
     "ip_inn": "IP/INN",
     "pensioner": "Pensioner",
     "save": "Saqlash",
@@ -131,7 +132,9 @@
     "error_loading": "Ishtirokchi ma'lumotlarini yuklashda xato",
     "error_saving": "Ishtirokchini saqlashda xato",
     "success": "O'zgarishlar saqlandi",
-    "required": "Majburiy"
+    "required": "Majburiy",
+    "passport_complete": "Pasport ma'lumotlari to'ldirilgan",
+    "editable_fields": "Tahrirlash mumkin bo'lgan maydonlar"
   }
   ,
   "titles": {

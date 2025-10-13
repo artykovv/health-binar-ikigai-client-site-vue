@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { http } from '@/api/http'
@@ -20,9 +20,6 @@ const showPassword = ref(false)
 const form = ref({
   email: '',
   password: '',
-  name: '',
-  lastname: '',
-  patronymic: '',
   personal_number: ''
 })
 
@@ -31,14 +28,20 @@ const passportForm = ref({
   passport_id: '',
   passport_issuer: '',
   passport_issue_date: '',
+  date_birth: '',
+  phone_number: '',
   bank: '',
   ip_inn: false,
-  pensioner: false,
-  phone_number: '',
-  date_birth: ''
+  pensioner: false
 })
 
 const togglePassword = () => { showPassword.value = !showPassword.value }
+
+const isPassportComplete = computed(() => {
+  const p = passportForm.value
+  const requiredFields = ['pin', 'passport_id', 'passport_issuer', 'passport_issue_date', 'date_birth']
+  return requiredFields.every(field => p[field] && p[field] !== null && p[field] !== '')
+})
 
 const loadParticipant = async () => {
   if (!participantId.value) return
@@ -47,9 +50,6 @@ const loadParticipant = async () => {
   try {
     const p = await http(`/api/participants/${participantId.value}`)
     form.value.email = p.email || ''
-    form.value.name = p.name || ''
-    form.value.lastname = p.lastname || ''
-    form.value.patronymic = p.patronymic || ''
     form.value.personal_number = p.personal_number || p.code || ''
     
     const passportInfo = p.passport_info || {}
@@ -57,11 +57,11 @@ const loadParticipant = async () => {
     passportForm.value.passport_id = passportInfo.passport_id || ''
     passportForm.value.passport_issuer = passportInfo.passport_issuer || ''
     passportForm.value.passport_issue_date = passportInfo.passport_issue_date || ''
+    passportForm.value.date_birth = passportInfo.date_birth || ''
+    passportForm.value.phone_number = passportInfo.phone_number || ''
     passportForm.value.bank = passportInfo.bank || ''
     passportForm.value.ip_inn = passportInfo.ip_inn || false
     passportForm.value.pensioner = passportInfo.pensioner || false
-    passportForm.value.phone_number = passportInfo.phone_number || ''
-    passportForm.value.date_birth = passportInfo.date_birth || ''
   } catch (error) {
     console.error('Error loading participant:', error)
     errorMessage.value = t('edit_participant.error_loading')
@@ -75,10 +75,7 @@ const submitEdit = async () => {
   try {
     // Обновляем основную информацию
     const payload = {
-      email: form.value.email,
-      name: form.value.name,
-      lastname: form.value.lastname,
-      patronymic: form.value.patronymic || null
+      email: form.value.email
     }
     if (form.value.password && form.value.password.trim().length > 0) {
       payload.password = form.value.password
@@ -91,11 +88,11 @@ const submitEdit = async () => {
       passport_id: passportForm.value.passport_id || null,
       passport_issuer: passportForm.value.passport_issuer || null,
       passport_issue_date: passportForm.value.passport_issue_date || null,
+      date_birth: passportForm.value.date_birth || null,
+      phone_number: passportForm.value.phone_number || null,
       bank: passportForm.value.bank || null,
       ip_inn: passportForm.value.ip_inn || false,
-      pensioner: passportForm.value.pensioner || false,
-      phone_number: passportForm.value.phone_number || null,
-      date_birth: passportForm.value.date_birth || null
+      pensioner: passportForm.value.pensioner || false
     }
     await http(`/api/participants/passport_info/${participantId.value}`, { method: 'PUT', body: passportPayload })
     
@@ -148,23 +145,6 @@ onMounted(() => {
                 </div>
               </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label for="name" class="block text-sm font-medium text-white mb-1">{{ t('edit_participant.name') }} *</label>
-                  <input v-model="form.name" type="text" id="name" required
-                    class="block w-full rounded-lg border-0 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                </div>
-                <div>
-                  <label for="lastname" class="block text-sm font-medium text-white mb-1">{{ t('edit_participant.lastname') }} *</label>
-                  <input v-model="form.lastname" type="text" id="lastname" required
-                    class="block w-full rounded-lg border-0 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                </div>
-                <div>
-                  <label for="patronymic" class="block text-sm font-medium text-white mb-1">{{ t('edit_participant.patronymic') }}</label>
-                  <input v-model="form.patronymic" type="text" id="patronymic"
-                    class="block w-full rounded-lg border-0 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                </div>
-              </div>
 
               <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <div>
@@ -175,7 +155,7 @@ onMounted(() => {
               </div>
 
               <!-- Паспортная информация -->
-              <div class="border-t border-white/10 pt-4">
+              <div v-if="!isPassportComplete" class="border-t border-white/10 pt-4">
                 <h6 class="text-sm font-semibold mb-3 text-white">{{ t('edit_participant.passport_info') }}</h6>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -237,6 +217,28 @@ onMounted(() => {
                       <input v-model="passportForm.pensioner" type="checkbox" class="mr-2 rounded border-gray-300 text-[#015C3B] focus:ring-white">
                       {{ t('edit_participant.pensioner') }}
                     </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Редактируемые поля для заполненных паспортных данных -->
+              <div v-else class="border-t border-white/10 pt-4">
+                <div class="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800 mb-4">
+                  {{ t('edit_participant.passport_complete') }}
+                </div>
+                
+                <h6 class="text-sm font-semibold mb-3 text-white">{{ t('edit_participant.editable_fields') }}</h6>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label for="phone_number_edit" class="block text-sm font-medium text-white mb-1">{{ t('edit_participant.phone') }}</label>
+                    <input v-model="passportForm.phone_number" type="text" id="phone_number_edit"
+                      class="block w-full rounded-lg border-0 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+                  </div>
+                  <div>
+                    <label for="bank_edit" class="block text-sm font-medium text-white mb-1">{{ t('edit_participant.bank') }}</label>
+                    <input v-model="passportForm.bank" type="text" id="bank_edit"
+                      class="block w-full rounded-lg border-0 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
                   </div>
                 </div>
               </div>

@@ -47,6 +47,7 @@
     "copied": "Copied",
     "all_time": "All time bonus",
     "passport_incomplete": "Please fill in your passport data",
+    "account_not_activated": "This account is not activated",
     "total": "Total",
     "current": "Current",
     "cycle_label": "Cycle",
@@ -123,7 +124,7 @@
     "passport_issuer": "Issued by",
     "passport_issue_date": "Issue date",
     "date_birth": "Date of birth",
-    "bank": "Bank",
+    "bank": "Mobile Bank",
     "ip_inn": "IP/INN",
     "pensioner": "Pensioner",
     "save": "Save",
@@ -132,7 +133,9 @@
     "error_loading": "Error loading participant data",
     "error_saving": "Error saving participant",
     "success": "Changes saved",
-    "required": "Required"
+    "required": "Required",
+    "passport_complete": "Passport data is complete",
+    "editable_fields": "Editable fields"
   }
   ,
   "titles": {
