@@ -45,6 +45,7 @@
     "registration_link": "Ro'yxatdan o'tish havolasi",
     "copied": "Nusxalandi",
     "all_time": "Butun vaqt",
+    "passport_incomplete": "Iltimos, pasport ma'lumotlaringizni to'ldiring",
     "total": "Jami",
     "current": "Joriy",
     "cycle_label": "Sikl",
@@ -55,7 +56,8 @@
     "home": "Bosh sahifa",
     "structure": "Tuzilma",
     "bonuses": "Bonuslar",
-    "personals": "Shaxsiylar"
+    "personals": "Shaxsiylar",
+    "edit_profile": "Profil"
   }
   ,
   "register": {
@@ -78,6 +80,8 @@
     "success": "Foydalanuvchi muvaffaqiyatli ro'yxatdan o'tdi!",
     "errors": {
       "emailExists": "Bu email bilan foydalanuvchi allaqachon mavjud",
+      "sponsorRequired": "Homiy tanlash majburiy",
+      "branchRequired": "Filial tanlash majburiy",
       "generic": "Ro'yxatdan o'tishda xatolik. Keyinroq urinib ko'ring"
     }
   }
@@ -90,6 +94,44 @@
     "days": "kun",
     "hours": "soat",
     "minutes": "daqiqa"
+  }
+  ,
+  "edit_participant": {
+    "title": "Profil",
+    "back": "Orqaga",
+    "form_title": "Profil",
+    "info_title": "Ma'lumot",
+    "info_text": "Email, Ism, Familiya va Filial majburiy. Parolni faqat o'zgartirmoqchi bo'lsangiz kiriting.",
+    "email": "Email",
+    "password": "Parol (majburiy emas)",
+    "name": "Ism",
+    "lastname": "Familiya",
+    "patronymic": "Otasining ismi",
+    "search_sponsor": "Homiy qidirish",
+    "search": "Qidirish",
+    "search_placeholder": "FIO yoki shaxsiy raqam bo'yicha qidirish",
+    "selected_sponsor": "Tanlangan homiy:",
+    "remove": "O'chirish",
+    "branch": "Filial",
+    "select_branch": "Filialni tanlang",
+    "personal_number": "Shaxsiy raqam",
+    "phone": "Telefon",
+    "passport_info": "Pasport ma'lumotlari",
+    "pin": "PIN",
+    "passport_id": "Pasport raqami",
+    "passport_issuer": "Kim tomonidan berilgan",
+    "passport_issue_date": "Berilgan sana",
+    "date_birth": "Tug'ilgan sana",
+    "bank": "Bank",
+    "ip_inn": "IP/INN",
+    "pensioner": "Pensioner",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda...",
+    "reset": "O'zgarishlarni bekor qilish",
+    "error_loading": "Ishtirokchi ma'lumotlarini yuklashda xato",
+    "error_saving": "Ishtirokchini saqlashda xato",
+    "success": "O'zgarishlar saqlandi",
+    "required": "Majburiy"
   }
   ,
   "titles": {

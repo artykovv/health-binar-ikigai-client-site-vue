@@ -46,6 +46,7 @@
     "registration_link": "Registration link",
     "copied": "Copied",
     "all_time": "All time bonus",
+    "passport_incomplete": "Please fill in your passport data",
     "total": "Total",
     "current": "Current",
     "cycle_label": "Cycle",
@@ -56,7 +57,8 @@
     "home": "Home",
     "structure": "Structure",
     "bonuses": "Bonuses",
-    "personals": "Personals"
+    "personals": "Personals",
+    "edit_profile": "Profile"
   }
   ,
   "register": {
@@ -79,6 +81,8 @@
     "success": "User registered successfully!",
     "errors": {
       "emailExists": "A user with this email already exists",
+      "sponsorRequired": "Sponsor selection is required",
+      "branchRequired": "Branch selection is required",
       "generic": "Registration error. Please try again later"
     }
   }
@@ -91,6 +95,44 @@
     "days": "days",
     "hours": "hours",
     "minutes": "minutes"
+  }
+  ,
+  "edit_participant": {
+    "title": "Profile",
+    "back": "Back",
+    "form_title": "Profile",
+    "info_title": "Information",
+    "info_text": "Email, Name, Last name and Branch are required. Enter password only if you want to change it.",
+    "email": "Email",
+    "password": "Password (optional)",
+    "name": "Name",
+    "lastname": "Last name",
+    "patronymic": "Patronymic",
+    "search_sponsor": "Search sponsor",
+    "search": "Search",
+    "search_placeholder": "Search by name or personal number",
+    "selected_sponsor": "Selected sponsor:",
+    "remove": "Remove",
+    "branch": "Branch",
+    "select_branch": "Select branch",
+    "personal_number": "Personal number",
+    "phone": "Phone",
+    "passport_info": "Passport Information",
+    "pin": "PIN",
+    "passport_id": "Passport number",
+    "passport_issuer": "Issued by",
+    "passport_issue_date": "Issue date",
+    "date_birth": "Date of birth",
+    "bank": "Bank",
+    "ip_inn": "IP/INN",
+    "pensioner": "Pensioner",
+    "save": "Save",
+    "saving": "Saving...",
+    "reset": "Reset changes",
+    "error_loading": "Error loading participant data",
+    "error_saving": "Error saving participant",
+    "success": "Changes saved",
+    "required": "Required"
   }
   ,
   "titles": {

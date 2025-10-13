@@ -39,6 +39,12 @@ const routes = [
     component: () => import('@/views/Personals.vue'),
     meta: { titleKey: 'titles.personals' },
   },
+  {
+    path: '/:locale(en|ru|uz|kg)?/profile/edit',
+    name: 'edit-profile',
+    component: () => import('@/views/EditParticipant.vue'),
+    meta: { titleKey: 'edit_participant.title' },
+  },
 ]
 
 const router = createRouter({

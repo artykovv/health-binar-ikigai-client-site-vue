@@ -65,14 +65,43 @@ function clearSponsor() {
 async function generatePersonalNumber() {
   try {
     const data = await http('/api/participants/code')
-    if (data?.personal_number) form.value.personal_number = data.personal_number
-  } catch (_) {}
+    console.log('API response for /api/participants/code:', data)
+    
+    // Проверяем разные возможные поля в ответе
+    if (data?.personal_number) {
+      form.value.personal_number = data.personal_number
+    } else if (data?.code) {
+      form.value.personal_number = data.code
+    } else if (data?.number) {
+      form.value.personal_number = data.number
+    } else if (typeof data === 'string') {
+      form.value.personal_number = data
+    } else {
+      console.warn('Unexpected API response format:', data)
+    }
+  } catch (error) {
+    console.error('Error generating personal number:', error)
+  }
 }
 
 async function submitRegistration() {
   submitting.value = true
   errorMessage.value = ''
   successMessage.value = ''
+  
+  // Валидация обязательных полей
+  if (!form.value.sponsor_id) {
+    errorMessage.value = t('register.errors.sponsorRequired')
+    submitting.value = false
+    return
+  }
+  
+  if (!form.value.branch_id) {
+    errorMessage.value = t('register.errors.branchRequired')
+    submitting.value = false
+    return
+  }
+  
   try {
     const payload = {
       email: form.value.email,
@@ -80,8 +109,8 @@ async function submitRegistration() {
       name: form.value.name,
       lastname: form.value.lastname,
       patronymic: form.value.patronymic || null,
-      sponsor_id: form.value.sponsor_id || null,
-      branch_id: form.value.branch_id ? parseInt(form.value.branch_id) : null,
+      sponsor_id: form.value.sponsor_id,
+      branch_id: parseInt(form.value.branch_id),
       code: form.value.personal_number || null,
     }
     await http('/api/participants/', { method: 'POST', body: payload })
@@ -112,7 +141,10 @@ function resetForm() {
   generatePersonalNumber()
 }
 
-onMounted(() => { loadBranches(); generatePersonalNumber() })
+onMounted(() => { 
+  loadBranches()
+  generatePersonalNumber()
+})
 </script>
 
 <template>
@@ -131,16 +163,16 @@ onMounted(() => { loadBranches(); generatePersonalNumber() })
                 <!-- 1) Поиск спонсора -->
                 <div class="grid md:grid-cols-12 gap-4">
                   <div class="md:col-span-12">
-                    <label for="sponsor_search" class="block text-sm font-medium mb-1">{{ t('register.searchSponsor') }}</label>
+                    <label for="sponsor_search" class="block text-sm font-medium mb-1">{{ t('register.searchSponsor') }} *</label>
                     <input v-model="sponsorSearch" type="text" class="block w-full rounded-md bg-white text-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white border-0" id="sponsor_search" :placeholder="t('register.search')" @input="searchSponsors">
-                    <div v-if="sponsorResults.length > 0" class="mt-2 rounded-md shadow">
+                    <div v-if="sponsorResults.length > 0" class="mt-2 rounded-md shadow" style="background-color: #437d63;">
                       <div class="divide-y dark:divide-gray-700">
                         <button v-for="sponsor in sponsorResults" :key="sponsor.id" @click="selectSponsor(sponsor)" class="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-[#4a4a52] dark:text-white">
                           {{ sponsor.lastname }} {{ sponsor.name }} {{ sponsor.patronymic }} - {{ sponsor.personal_number }}
                         </button>
                       </div>
                     </div>
-                    <div v-if="selectedSponsor" class="mt-2 rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-800 dark:bg-[#3f3f47] dark:border-gray-700 dark:text-white">
+                    <div v-if="selectedSponsor" class="mt-2 rounded-md border border-blue-200 px-3 py-2 text-sm text-white" style="background-color: #437d63;">
                       <div class="flex items-center justify-between">
                         <div>
                           <strong>{{ t('register.selectedSponsor') }}</strong>

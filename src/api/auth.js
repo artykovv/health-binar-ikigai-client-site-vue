@@ -44,7 +44,9 @@ export async function register(payload) {
 }
 
 export async function fetchMe() {
-  return http('/api/profile/me/participant')
+  const data = await http('/api/profile/me/participant')
+  // Возвращаем current_user как основного пользователя
+  return data.current_user || data
 }
 
 export async function fetchParticipantBonusData(participantId) {

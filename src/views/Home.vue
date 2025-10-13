@@ -8,6 +8,7 @@ import { loadAuth, saveMe } from '@/utils/authStorage'
 const { t, locale } = useI18n()
 
 const me = ref(null)
+const passport = ref(null)
 const loading = ref(false)
 const error = ref('')
 const copied = ref(false)
@@ -33,16 +34,26 @@ const fullName = computed(() => {
   return parts.join(' ')
 })
 
+const isPassportIncomplete = computed(() => {
+  if (!passport.value) return true
+  const p = passport.value
+  const requiredFields = ['pin', 'passport_id', 'passport_issuer', 'passport_issue_date', 'bank', 'phone_number', 'date_birth']
+  return requiredFields.some(field => !p[field] || p[field] === null || p[field] === '')
+})
+
 async function loadProfileIfLoggedIn() {
   const auth = loadAuth()
   if (!auth) {
     me.value = null
+    passport.value = null
     return
   }
   loading.value = true
   error.value = ''
   try {
-    me.value = await fetchMe()
+    const fullData = await http('/api/profile/me/participant')
+    me.value = fullData.current_user || fullData
+    passport.value = fullData.passport || null
     saveMe(me.value)
     // fetch bonus data
     if (me.value && me.value.id) {
@@ -210,6 +221,17 @@ onUnmounted(() => {
         </div>
         <!-- Content -->
         <div v-else-if="me">
+          <!-- Passport incomplete warning -->
+          <div v-if="isPassportIncomplete" class="mb-4 rounded-2xl p-4 shadow overflow-hidden bg-yellow-500 text-white">
+            <div class="text-center font-medium mb-2">{{ t('home.passport_incomplete') }}</div>
+            <div class="text-center">
+              <router-link :to="{ name: 'edit-profile', params: { locale: locale } }" 
+                class="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm font-medium text-yellow-600 hover:bg-gray-100">
+                {{ t('edit_participant.title') }}
+              </router-link>
+            </div>
+          </div>
+          
           <div class="rounded-2xl p-6 shadow overflow-hidden bg-[#015C3B] text-white dark:bg-[#015C3B]">
             <h1 class="text-3xl font-bold text-center">{{ me.personal_number || '-' }}</h1>
             <div class="mt-3 text-center text-lg">{{ fullName || '-' }}</div>

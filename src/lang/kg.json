@@ -45,6 +45,7 @@
     "registration_link": "Катталуу шилтемеси",
     "copied": "Көчүрүлдү",
     "all_time": "Баардык убакыт",
+    "passport_incomplete": "Сураныч, паспорт маалыматтарыңызды толтуруңуз",
     "total": "Жалпы",
     "current": "Учурдагы",
     "cycle_label": "Цикл",
@@ -55,7 +56,8 @@
     "home": "Башкы",
     "structure": "Структура",
     "bonuses": "Бонустар",
-    "personals": "Жеке"
+    "personals": "Жеке",
+    "edit_profile": "Профиль"
   }
   ,
   "register": {
@@ -78,6 +80,8 @@
     "success": "Колдонуучу ийгиликтүү катталды!",
     "errors": {
       "emailExists": "Бул email менен колдонуучу мурунтан эле бар",
+      "sponsorRequired": "Спонсорду тандоо милдеттүү",
+      "branchRequired": "Филиалды тандоо милдеттүү",
       "generic": "Катталууда ката кетти. Кийинчерээк аракет кылыңыз"
     }
   }
@@ -90,6 +94,44 @@
     "days": "күн",
     "hours": "саат",
     "minutes": "мүнөт"
+  }
+  ,
+  "edit_participant": {
+    "title": "Профиль",
+    "back": "Артка",
+    "form_title": "Профиль",
+    "info_title": "Маалымат",
+    "info_text": "Email, Аты, Фамилия жана Филиал милдеттүү. Паролду өзгөртүүнү кааласаңыз гана киргизиңиз.",
+    "email": "Email",
+    "password": "Сырсөз (милдеттүү эмес)",
+    "name": "Аты",
+    "lastname": "Фамилия",
+    "patronymic": "Атасынын аты",
+    "search_sponsor": "Спонсор издөө",
+    "search": "Издөө",
+    "search_placeholder": "ФАА же жеке номер боюнча издөө",
+    "selected_sponsor": "Тандалган спонсор:",
+    "remove": "Өчүрүү",
+    "branch": "Филиал",
+    "select_branch": "Филиалды тандаңыз",
+    "personal_number": "Жеке номер",
+    "phone": "Телефон",
+    "passport_info": "Паспорт маалыматы",
+    "pin": "ПИН",
+    "passport_id": "Паспорт номери",
+    "passport_issuer": "Ким тарабынан берилген",
+    "passport_issue_date": "Берилген күнү",
+    "date_birth": "Туулган күнү",
+    "bank": "Банк",
+    "ip_inn": "ИП/ИНН",
+    "pensioner": "Пенсионер",
+    "save": "Сактоо",
+    "saving": "Сакталууда...",
+    "reset": "Өзгөртүүлөрдү жокко чыгаруу",
+    "error_loading": "Катышуучунун маалыматын жүктөөдө ката",
+    "error_saving": "Катышуучуну сактоодо ката",
+    "success": "Өзгөртүүлөр сакталды",
+    "required": "Милдеттүү"
   }
   ,
   "titles": {
