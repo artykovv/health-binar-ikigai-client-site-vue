@@ -264,7 +264,7 @@ onUnmounted(() => {
           <div class="justify-center mt-4">
             <div class="text-center">
               <div class="mt-2 text-left max-w-2xl mx-auto">
-          <div class="rounded-2xl p-5 shadow overflow-hidden bg-white text-black dark:bg-[#015C3B] dark:text-white">
+          <div class="rounded-2xl p-5 shadow bg-white text-black dark:bg-[#015C3B] dark:text-white">
                     <div class="mb-3">
                       <div class="text-sm opacity-90 mb-2">{{ t('home.week') }}</div>
                       <div ref="weekDropdownRef" class="relative">
@@ -275,7 +275,7 @@ onUnmounted(() => {
                           </svg>
                         </button>
                         <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform scale-100" leave-to-class="transform opacity-0 scale-95">
-                          <div v-if="isWeekOpen" class="absolute left-0 z-10 mt-2 w-full origin-top rounded-md bg-white text-black shadow-lg ring-1 ring-zinc-900/10 dark:bg-[#437d63] dark:text-white dark:ring-white/10">
+                          <div v-if="isWeekOpen" class="absolute left-0 z-50 mt-2 w-full origin-top rounded-md bg-white text-black shadow-lg ring-1 ring-zinc-900/10 dark:bg-[#437d63] dark:text-white dark:ring-white/10">
                             <ul class="max-h-60 overflow-auto py-1">
                               <li v-for="(w, idx) in weeks" :key="w.label">
                                 <button type="button" @click="selectWeek(idx)" class="block w-full text-left px-4 py-2 text-sm" :class="idx === selectedWeekIndex ? 'bg-gray-100 text-gray-900 dark:bg-[#015C3B] dark:text-white' : 'text-gray-700 hover:bg-gray-50 dark:text-white dark:hover:bg-[#015C3B]'">
