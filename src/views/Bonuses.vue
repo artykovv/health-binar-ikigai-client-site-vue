@@ -84,7 +84,7 @@ onMounted(() => loadTab(tab.value))
     <div class="flex gap-4 mt-3 flex-wrap">
       <button :style="tab === 'structure' ? activeBtnStyle : null" @click="setTab('structure')">{{ t('home.structure_bonus') }}</button>
       <button :style="tab === 'sponsor' ? activeBtnStyle : null" @click="setTab('sponsor')">{{ t('home.sponsor_bonus') }}</button>
-      <button :style="tab === 'health_day' ? activeBtnStyle : null" @click="setTab('health_day')">{{ t('home.health_day') }}</button>
+      <!-- <button :style="tab === 'health_day' ? activeBtnStyle : null" @click="setTab('health_day')">{{ t('home.health_day') }}</button> -->
       <button :style="tab === 'gifts' ? activeBtnStyle : null" @click="setTab('gifts')">{{ t('home.gifts') }}</button>
       <button :style="tab === 'multi' ? activeBtnStyle : null" @click="setTab('multi')">{{ t('home.multibonus') }}</button>
     </div>
