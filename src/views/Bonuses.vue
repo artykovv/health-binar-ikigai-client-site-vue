@@ -48,19 +48,24 @@ async function loadTab(which) {
   try {
     const query = qs(id)
     if (which === 'multi' && multi.value.length === 0) {
-      multi.value = await http(`/api/bonuses/multi_bonuses?${query}`)
+      const response = await http(`/api/bonuses/multi_bonuses?${query}`)
+      multi.value = response?.items || []
     }
     if (which === 'structure' && structure.value.length === 0) {
-      structure.value = await http(`/api/bonuses/structure_bonuses?${query}`)
+      const response = await http(`/api/bonuses/structure_bonuses?${query}`)
+      structure.value = response?.items || []
     }
     if (which === 'sponsor' && sponsor.value.length === 0) {
-      sponsor.value = await http(`/api/bonuses/sponsor_bonuses?${query}`)
+      const response = await http(`/api/bonuses/sponsor_bonuses?${query}`)
+      sponsor.value = response?.items || []
     }
     if (which === 'gifts' && gifts.value.length === 0) {
-      gifts.value = await http(`/api/bonuses/gifts?${query}`)
+      const response = await http(`/api/bonuses/gifts?${query}`)
+      gifts.value = response?.items || []
     }
     if (which === 'health_day' && healthDay.value.length === 0) {
-      healthDay.value = await http(`/api/bonuses/health_day?participant_id=${id}`)
+      const response = await http(`/api/bonuses/health_day?participant_id=${id}`)
+      healthDay.value = response?.items || []
     }
   } catch (e) {
     error.value = e?.message || 'Error'
@@ -132,8 +137,9 @@ onMounted(() => loadTab(tab.value))
             <div class="text-sm opacity-80">{{ t('home.structure_bonus') }}</div>
             <div class="text-xs opacity-80">{{ formatDate(b.received_at) }}</div>
           </div>
-          <div class="mt-1 text-base font-medium">+{{ b.amount }}</div>
+          <div class="mt-1 text-base font-medium">{{ b.reward }}</div>
           <div class="text-xs opacity-80">#{{ b.cycle_number }} · {{ t('home.stage') }} {{ b.stage_number }}</div>
+          <div v-if="b.branch" class="text-xs opacity-80 mt-1">{{ b.branch }}</div>
           <div class="text-xs mt-1">
             <span :class="b.status === 'paid' ? 'text-green-300' : 'text-yellow-300'">
               {{ b.status === 'paid' ? t('home.issued') : t('home.not_issued') }}
