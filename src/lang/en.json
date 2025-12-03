@@ -51,7 +51,9 @@
     "total": "Total",
     "current": "Current",
     "cycle_label": "Cycle",
-    "stage_label": "Stage"
+    "stage_label": "Stage",
+    "contract_success": "You can choose products",
+    "choose_products": "Choose"
   }
   ,
   "menu": {
@@ -59,6 +61,7 @@
     "structure": "Structure",
     "bonuses": "Bonuses",
     "personals": "Personals",
+    "purchases": "Purchases",
     "edit_profile": "Profile"
   }
   ,
@@ -144,7 +147,68 @@
     "register": "Register",
     "structure": "Structure",
     "bonuses": "Bonuses",
-    "personals": "Personals"
+    "personals": "Personals",
+    "purchases": "Purchases"
+  },
+  "purchases": {
+    "title": "Purchases",
+    "contract": "Contract",
+    "health_day": "Health Day",
+    "contract_content": "Contract purchases content will be displayed here.",
+    "health_day_content": "Health Day purchases content will be displayed here.",
+    "loading": "Loading orders...",
+    "load_error": "Error loading orders",
+    "no_participant": "Participant not found",
+    "no_orders": "No orders found",
+    "order_id": "Order number",
+    "total_amount": "Total Amount",
+    "amount_used": "Amount Used",
+    "status": "Status",
+    "status_paid": "Paid",
+    "status_partially_paid": "Partially Paid",
+    "status_pending": "Pending",
+    "status_cancelled": "Cancelled"
+  },
+  "product_selection": {
+    "title": "Product Selection",
+    "contract_amount": "Remaining amount",
+    "initial_amount": "Initial amount",
+    "currency": "USD",
+    "in_development": "Product selection is currently under development",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading products...",
+    "product_name": "Product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "total_amount": "Total Amount",
+    "out_of_stock": "Out of stock",
+    "stock": "Stock",
+    "no_products": "No products available",
+    "select_all": "Select all",
+    "add": "Add",
+    "low_stock": "Low stock",
+    "remaining_after": "Remaining after purchase",
+    "submitting": "Submitting...",
+    "missing_data": "Missing required data",
+    "order_error": "Error creating order"
+  },
+  "order_items": {
+    "title": "Order Items",
+    "created_at": "Created at",
+    "total_amount": "Total Amount",
+    "status": "Status",
+    "loading": "Loading items...",
+    "load_error": "Error loading order",
+    "product": "Product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "issued": "Issued",
+    "issued_quantity": "Issued",
+    "no_items": "No items found",
+    "close": "Close"
   }
 }
 

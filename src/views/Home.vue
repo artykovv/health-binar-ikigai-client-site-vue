@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { fetchMe, fetchParticipantBonusData, fetchParticipantsBonuses } from '@/api/auth'
 import { http } from '@/api/http'
 import { loadAuth, saveMe } from '@/utils/authStorage'
+import ProductSelectionModal from '@/components/ProductSelectionModal.vue'
 
 const { t, locale } = useI18n()
 
@@ -59,6 +60,8 @@ async function loadProfileIfLoggedIn() {
     if (me.value && me.value.id) {
       bonus.value = await fetchParticipantBonusData(me.value.id)
       bonuses.value = await fetchParticipantsBonuses(me.value.id)
+      // fetch contract data
+      await loadContract(me.value.id)
     }
   } catch (e) {
     error.value = e?.message || 'Error'
@@ -71,6 +74,7 @@ async function loadProfileIfLoggedIn() {
 
 const bonus = ref(null)
 const bonuses = ref(null)
+const contract = ref(null)
 const allTimeTotal = computed(() => {
   const b = bonuses.value || {}
   const left = Number(b.total_structure || 0)
@@ -97,6 +101,7 @@ const filters = ref({ start_date: '', end_date: '' })
 const summary = ref(null)
 const isWeekOpen = ref(false)
 const weekDropdownRef = ref(null)
+const isProductModalOpen = ref(false)
 
 function formatDate(d) {
   const year = d.getFullYear()
@@ -156,6 +161,21 @@ async function loadWeeklySummary() {
   }
 }
 
+async function loadContract(participantId) {
+  try {
+    const data = await http(`/api/contracts/${participantId}`)
+    contract.value = data || null
+  } catch (e) {
+    // If 404, do nothing (contract doesn't exist)
+    if (e?.status === 404) {
+      contract.value = null
+      return
+    }
+    // For other errors, also set to null
+    contract.value = null
+  }
+}
+
 function toggleWeekDropdown() {
   isWeekOpen.value = !isWeekOpen.value
 }
@@ -176,6 +196,21 @@ function handleClickOutside(e) {
       isWeekOpen.value = false
     }
   } catch (_) {}
+}
+
+function openProductModal() {
+  isProductModalOpen.value = true
+}
+
+function closeProductModal() {
+  isProductModalOpen.value = false
+}
+
+async function handleOrderCreated() {
+  // Перезагружаем контракт после создания заказа
+  if (me.value && me.value.id) {
+    await loadContract(me.value.id)
+  }
 }
 // Watch for locale changes and rebuild weeks
 watch(locale, () => {
@@ -234,6 +269,16 @@ onUnmounted(() => {
                 class="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm font-medium text-yellow-600 hover:bg-gray-100">
                 {{ t('edit_participant.title') }}
               </router-link>
+            </div>
+          </div>
+
+          <!-- Contract success message -->
+          <div v-if="contract && parseFloat(contract.remaining_amount) > 0" class="mb-4 rounded-2xl p-4 shadow overflow-hidden bg-green-500 text-white">
+            <div class="text-center font-medium mb-3">{{ t('home.contract_success') }}</div>
+            <div class="text-center">
+              <button type="button" @click="openProductModal" class="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm font-medium text-green-600 hover:bg-gray-100">
+                {{ t('home.choose_products') }}
+              </button>
             </div>
           </div>
           
@@ -324,6 +369,14 @@ onUnmounted(() => {
     </div>
   </div>
 
+  <!-- Product Selection Modal -->
+  <ProductSelectionModal
+    :is-open="isProductModalOpen"
+    :contract="contract"
+    :participant-id="me?.id"
+    @close="closeProductModal"
+    @order-created="handleOrderCreated"
+  />
 </template>
 
 <style scoped>

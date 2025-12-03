@@ -45,6 +45,12 @@ const routes = [
     component: () => import('@/views/EditParticipant.vue'),
     meta: { titleKey: 'edit_participant.title' },
   },
+  {
+    path: '/:locale(en|ru|uz|kg)?/purchases',
+    name: 'purchases',
+    component: () => import('@/views/Purchases.vue'),
+    meta: { titleKey: 'titles.purchases' },
+  },
 ]
 
 const router = createRouter({

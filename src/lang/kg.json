@@ -50,7 +50,9 @@
     "total": "Жалпы",
     "current": "Учурдагы",
     "cycle_label": "Цикл",
-    "stage_label": "Этап"
+    "stage_label": "Этап",
+    "contract_success": "Сиз товарларды тандай аласыз",
+    "choose_products": "Тандоо"
   }
   ,
   "menu": {
@@ -58,6 +60,7 @@
     "structure": "Структура",
     "bonuses": "Бонустар",
     "personals": "Жеке",
+    "purchases": "Сатып алуулар",
     "edit_profile": "Профиль"
   }
   ,
@@ -143,7 +146,68 @@
     "register": "Катталуу",
     "structure": "Структура",
     "bonuses": "Бонустар",
-    "personals": "Жеке"
+    "personals": "Жеке",
+    "purchases": "Сатып алуулар"
+  },
+  "purchases": {
+    "title": "Сатып алуулар",
+    "contract": "Келишим",
+    "health_day": "Health Day",
+    "contract_content": "Бул жерде келишим боюнча сатып алуулар көрсөтүлөт.",
+    "health_day_content": "Бул жерде Health Day сатып алуулары көрсөтүлөт.",
+    "loading": "Заказдар жүктөлүп жатат...",
+    "load_error": "Заказдарды жүктөөдө ката",
+    "no_participant": "Катышуучу табылган жок",
+    "no_orders": "Заказдар табылган жок",
+    "order_id": "Заказ номер",
+    "total_amount": "Жалпы сумма",
+    "amount_used": "Колдонулган",
+    "status": "Статус",
+    "status_paid": "Төлөнгөн",
+    "status_partially_paid": "Жарым-жартылай төлөнгөн",
+    "status_pending": "Күтүүдө",
+    "status_cancelled": "Жокко чыгарылган"
+  },
+  "product_selection": {
+    "title": "Товарларды тандоо",
+    "contract_amount": "Калган сумма",
+    "initial_amount": "Баштапкы сумма",
+    "currency": "USD",
+    "in_development": "Товарларды тандоо азыр иштелип жатат",
+    "cancel": "Жокко чыгаруу",
+    "confirm": "Ырастоо",
+    "loading": "Товарлар жүктөлүп жатат...",
+    "product_name": "Товар",
+    "price": "Баасы",
+    "quantity": "Саны",
+    "total": "Жалпы",
+    "total_amount": "Жалпы сумма",
+    "out_of_stock": "Кампасыз",
+    "stock": "Кампа",
+    "no_products": "Товарлар жеткиликтүү эмес",
+    "select_all": "Баарын танда",
+    "add": "Кошуу",
+    "low_stock": "Аз кампа",
+    "remaining_after": "Сатып алгандан кийин калган",
+    "submitting": "Жөнөтүлүүдө...",
+    "missing_data": "Керектүү маалыматтар жок",
+    "order_error": "Заказды түзүүдө ката"
+  },
+  "order_items": {
+    "title": "Заказ товарлары",
+    "created_at": "Түзүлгөн күнү",
+    "total_amount": "Жалпы сумма",
+    "status": "Статус",
+    "loading": "Товарлар жүктөлүп жатат...",
+    "load_error": "Заказды жүктөөдө ката",
+    "product": "Товар",
+    "price": "Баасы",
+    "quantity": "Саны",
+    "total": "Жалпы",
+    "issued": "Берилген",
+    "issued_quantity": "Берилген",
+    "no_items": "Товарлар табылган жок",
+    "close": "Жабуу"
   }
 }
 

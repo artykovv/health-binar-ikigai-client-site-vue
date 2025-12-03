@@ -50,7 +50,9 @@
     "total": "Jami",
     "current": "Joriy",
     "cycle_label": "Sikl",
-    "stage_label": "Bosqich"
+    "stage_label": "Bosqich",
+    "contract_success": "Mahsulotlarni tanlashingiz mumkin",
+    "choose_products": "Tanlash"
   }
   ,
   "menu": {
@@ -58,6 +60,7 @@
     "structure": "Tuzilma",
     "bonuses": "Bonuslar",
     "personals": "Shaxsiylar",
+    "purchases": "Xaridlar",
     "edit_profile": "Profil"
   }
   ,
@@ -143,7 +146,68 @@
     "register": "Ro'yxatdan o'tish",
     "structure": "Tuzilma",
     "bonuses": "Bonuslar",
-    "personals": "Shaxsiylar"
+    "personals": "Shaxsiylar",
+    "purchases": "Xaridlar"
+  },
+  "purchases": {
+    "title": "Xaridlar",
+    "contract": "Shartnoma",
+    "health_day": "Health Day",
+    "contract_content": "Bu yerda shartnoma bo'yicha xaridlar ko'rsatiladi.",
+    "health_day_content": "Bu yerda Health Day xaridlari ko'rsatiladi.",
+    "loading": "Buyurtmalar yuklanmoqda...",
+    "load_error": "Buyurtmalarni yuklashda xato",
+    "no_participant": "Ishtirokchi topilmadi",
+    "no_orders": "Buyurtmalar topilmadi",
+    "order_id": "Buyurtma raqami",
+    "total_amount": "Umumiy summa",
+    "amount_used": "Ishlatilgan",
+    "status": "Holat",
+    "status_paid": "To'langan",
+    "status_partially_paid": "Qisman to'langan",
+    "status_pending": "Kutilmoqda",
+    "status_cancelled": "Bekor qilingan"
+  },
+  "product_selection": {
+    "title": "Mahsulot tanlash",
+    "contract_amount": "Qolgan summa",
+    "initial_amount": "Boshlang'ich summa",
+    "currency": "USD",
+    "in_development": "Mahsulot tanlash hozirda ishlab chiqilmoqda",
+    "cancel": "Bekor qilish",
+    "confirm": "Tasdiqlash",
+    "loading": "Mahsulotlar yuklanmoqda...",
+    "product_name": "Mahsulot",
+    "price": "Narx",
+    "quantity": "Miqdor",
+    "total": "Jami",
+    "total_amount": "Umumiy summa",
+    "out_of_stock": "Omborda yo'q",
+    "stock": "Ombor",
+    "no_products": "Mahsulotlar mavjud emas",
+    "select_all": "Barchasini tanlash",
+    "add": "Qo'shish",
+    "low_stock": "Kam ombor",
+    "remaining_after": "Xarid qilgandan keyin qolgan",
+    "submitting": "Yuborilmoqda...",
+    "missing_data": "Kerakli ma'lumotlar yo'q",
+    "order_error": "Buyurtma yaratishda xato"
+  },
+  "order_items": {
+    "title": "Buyurtma mahsulotlari",
+    "created_at": "Yaratilgan sana",
+    "total_amount": "Umumiy summa",
+    "status": "Holat",
+    "loading": "Mahsulotlar yuklanmoqda...",
+    "load_error": "Buyurtmani yuklashda xato",
+    "product": "Mahsulot",
+    "price": "Narx",
+    "quantity": "Miqdor",
+    "total": "Jami",
+    "issued": "Berilgan",
+    "issued_quantity": "Berilgan",
+    "no_items": "Mahsulotlar topilmadi",
+    "close": "Yopish"
   }
 }
 

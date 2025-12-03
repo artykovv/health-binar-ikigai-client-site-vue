@@ -50,7 +50,9 @@
     "total": "Общий",
     "current": "Текущий",
     "cycle_label": "Цикл",
-    "stage_label": "Этап"
+    "stage_label": "Этап",
+    "contract_success": "Вы можете выбрать товары",
+    "choose_products": "Выбрать"
   }
   ,
   "menu": {
@@ -58,6 +60,7 @@
     "structure": "Структура",
     "bonuses": "Бонусы",
     "personals": "Личники",
+    "purchases": "Покупки",
     "edit_profile": "Профиль"
   }
   ,
@@ -143,7 +146,68 @@
     "register": "Регистрация",
     "structure": "Структура",
     "bonuses": "Бонусы",
-    "personals": "Личники"
+    "personals": "Личники",
+    "purchases": "Покупки"
+  },
+  "purchases": {
+    "title": "Покупки",
+    "contract": "Контракт",
+    "health_day": "Health Day",
+    "contract_content": "Здесь будет отображаться контент покупок по контракту.",
+    "health_day_content": "Здесь будет отображаться контент покупок Health Day.",
+    "loading": "Загрузка заказов...",
+    "load_error": "Ошибка загрузки заказов",
+    "no_participant": "Участник не найден",
+    "no_orders": "Заказы не найдены",
+    "order_id": "Номер заказа",
+    "total_amount": "Общая сумма",
+    "amount_used": "Использовано",
+    "status": "Статус",
+    "status_paid": "Оплачен",
+    "status_partially_paid": "Частично оплачен",
+    "status_pending": "В ожидании",
+    "status_cancelled": "Отменен"
+  },
+  "product_selection": {
+    "title": "Выбор товаров",
+    "contract_amount": "Остаток",
+    "initial_amount": "Начальная сумма",
+    "currency": "USD",
+    "in_development": "Выбор товаров находится в разработке",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "loading": "Загрузка товаров...",
+    "product_name": "Товар",
+    "price": "Цена",
+    "quantity": "Количество",
+    "total": "Итого",
+    "total_amount": "Общая сумма",
+    "out_of_stock": "Нет в наличии",
+    "stock": "Остаток",
+    "no_products": "Товары недоступны",
+    "select_all": "Выбрать все",
+    "add": "Добавить",
+    "low_stock": "Мало на складе",
+    "remaining_after": "Остаток после покупки",
+    "submitting": "Отправка...",
+    "missing_data": "Отсутствуют необходимые данные",
+    "order_error": "Ошибка при создании заказа"
+  },
+  "order_items": {
+    "title": "Товары заказа",
+    "created_at": "Дата создания",
+    "total_amount": "Общая сумма",
+    "status": "Статус",
+    "loading": "Загрузка товаров...",
+    "load_error": "Ошибка загрузки заказа",
+    "product": "Товар",
+    "price": "Цена",
+    "quantity": "Количество",
+    "total": "Итого",
+    "issued": "Выдано",
+    "issued_quantity": "Выдано",
+    "no_items": "Товары не найдены",
+    "close": "Закрыть"
   }
 }
 
